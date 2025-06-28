@@ -40,7 +40,6 @@
             </div>
 
             <div class="form-group">
-                <label>撮影タイプ:</label>
                 <div class="shooting-type-checkboxes">
                     <label class="checkbox-label">
                         <input type="checkbox" name="shootingType" value="studio">
@@ -65,8 +64,35 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label>作品の利用目的:</label>
+                <div class="purpose-checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="web">
+                        WEBサイトやSNS、メールマガジン等での利用
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="amazon">
+                        amazon写真集
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="custom">
+                        その他
+                        <input type="text" id="customPurpose" placeholder="具体的な利用目的を入力" style="margin-left: 10px; width: 300px;">
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fee">謝礼:</label>
+                <div class="fee-input">
+                    <input type="number" id="fee" name="fee" placeholder="金額を入力" min="0">
+                    <span>円</span>
+                </div>
+            </div>
+
             <div id="sampleImages" class="sample-images-container" style="display: none;">
-                <h3>参考作例</h3>
+                <h3>撮影させていただきたいイメージ</h3>
                 <div id="imageGrid" class="image-grid"></div>
             </div>
 

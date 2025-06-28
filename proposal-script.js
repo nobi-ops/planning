@@ -72,13 +72,16 @@ function loadProposalFromUrl() {
     const day = urlParams.get('day');
     const location = urlParams.get('location');
     const typesStr = urlParams.get('types');
+    const purposesStr = urlParams.get('purposes');
+    const fee = urlParams.get('fee');
     
-    if (!modelName || !year || !month || !day || !location || !typesStr) {
+    if (!modelName || !year || !month || !day || !location || !typesStr || !purposesStr) {
         document.body.innerHTML = '<div class="error-container"><h1>エラー</h1><p>企画書データが見つかりません。</p></div>';
         return;
     }
     
     const shootingTypes = typesStr.split(',');
+    const purposes = purposesStr.split('|').filter(p => p.trim());
     
     // 曜日を計算
     const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
@@ -94,14 +97,18 @@ function loadProposalFromUrl() {
         hotel: 'ホテルでの撮影'
     };
     
-    const typeNames = shootingTypes.map(type => shootingTypeNames[type]).join(', ');
-    
     // データを表示
     document.getElementById('proposalTitle').textContent = `${modelName}様撮影企画書`;
     document.getElementById('modelName').textContent = modelName;
     document.getElementById('shootingDate').textContent = fullDate;
     document.getElementById('location').textContent = location;
-    document.getElementById('shootingTypes').textContent = typeNames;
+    document.getElementById('purposes').textContent = purposes.join(', ');
+    
+    // 謝礼の表示
+    if (fee && parseInt(fee) > 0) {
+        document.getElementById('feeAmount').textContent = `${parseInt(fee).toLocaleString()}円を謝礼として当日現金にてお渡しさせていただきます`;
+        document.getElementById('feeSection').style.display = 'block';
+    }
     
     // 作例画像を表示
     const exampleImagesContainer = document.getElementById('exampleImages');

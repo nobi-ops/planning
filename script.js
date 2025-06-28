@@ -196,8 +196,11 @@ function generateProposal() {
     const day = document.getElementById('shootingDay').value;
     const location = document.getElementById('location').value;
     const selectedTypes = document.querySelectorAll('input[name="shootingType"]:checked');
+    const selectedPurposes = document.querySelectorAll('input[name="purpose"]:checked');
+    const fee = document.getElementById('fee').value;
+    const customPurpose = document.getElementById('customPurpose').value;
     
-    if (!modelName || !year || !month || !day || !location || selectedTypes.length === 0) {
+    if (!modelName || !year || !month || !day || !location || selectedTypes.length === 0 || selectedPurposes.length === 0) {
         alert('すべての項目を入力してください。');
         return;
     }
@@ -217,6 +220,21 @@ function generateProposal() {
     const selectedTypeValues = Array.from(selectedTypes).map(type => type.value);
     const selectedTypeNames = selectedTypeValues.map(type => shootingTypeNames[type]);
     
+    // 利用目的の処理
+    const purposeNames = {
+        web: 'WEBサイトやSNS、メールマガジン等での利用',
+        amazon: 'amazon写真集'
+    };
+    
+    let purposeList = [];
+    selectedPurposes.forEach(purpose => {
+        if (purpose.value === 'custom' && customPurpose.trim()) {
+            purposeList.push(customPurpose.trim());
+        } else if (purpose.value !== 'custom') {
+            purposeList.push(purposeNames[purpose.value]);
+        }
+    });
+    
     // プレビュー表示
     const previewContent = document.getElementById('previewContent');
     let previewHTML = `
@@ -232,10 +250,19 @@ function generateProposal() {
                 <strong>撮影場所:</strong> ${location}
             </div>
             <div class="proposal-item">
-                <strong>撮影タイプ:</strong> ${selectedTypeNames.join(', ')}
-            </div>
+                <strong>作品の利用目的:</strong> ${purposeList.join(', ')}
+            </div>`;
+    
+    if (fee && fee > 0) {
+        previewHTML += `
             <div class="proposal-item">
-                <strong>参考作例:</strong>
+                <strong>謝礼:</strong> ${parseInt(fee).toLocaleString()}円を謝礼として当日現金にてお渡しさせていただきます
+            </div>`;
+    }
+    
+    previewHTML += `
+            <div class="proposal-item">
+                <strong>撮影させていただきたいイメージ:</strong>
     `;
     
     selectedTypes.forEach(typeCheckbox => {
@@ -267,7 +294,9 @@ function generateProposal() {
         month: parseInt(month), 
         day: parseInt(day),
         location,
-        shootingTypes: selectedTypeValues
+        shootingTypes: selectedTypeValues,
+        purposes: purposeList,
+        fee: fee ? parseInt(fee) : 0
     };
 }
 
@@ -285,7 +314,9 @@ function generateShareUrl() {
         month: data.month,
         day: data.day,
         location: data.location,
-        types: data.shootingTypes.join(',')
+        types: data.shootingTypes.join(','),
+        purposes: data.purposes.join('|'),
+        fee: data.fee
     });
     
     const shareUrl = `${window.location.origin}${window.location.pathname.replace('index.html', '')}proposal.html?${params.toString()}`;

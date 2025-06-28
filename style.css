@@ -88,11 +88,54 @@ header h1 {
     margin-left: 10px;
 }
 
-.shooting-type-checkboxes {
+.shooting-type-checkboxes,
+.purpose-checkboxes {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-top: 10px;
+}
+
+.purpose-checkboxes .checkbox-label {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.purpose-checkboxes .checkbox-label input[type="text"] {
+    margin-top: 8px;
+    margin-left: 0;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.fee-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fee-input input[type="number"] {
+    width: 200px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.fee-input input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.fee-input span {
+    font-weight: 600;
+    color: #555;
+    font-size: 1.1em;
 }
 
 .checkbox-label {
@@ -367,7 +410,8 @@ header h1 {
         text-align: center;
     }
     
-    .shooting-type-checkboxes {
+    .shooting-type-checkboxes,
+    .purpose-checkboxes {
         grid-template-columns: 1fr;
     }
     
