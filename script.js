@@ -243,8 +243,8 @@ async function handleShootingTypeChange() {
     }
 }
 
-// 企画書生成処理（完全に修正版）
-function generateProposal() {
+// 企画書生成処理（動的読み込み対応版）
+async function generateProposal() {
     console.log('企画書生成開始');
     
     const modelName = document.getElementById('modelName').value.trim();
@@ -347,6 +347,10 @@ function generateProposal() {
     
     // プレビュー表示
     const previewContent = document.getElementById('previewContent');
+    
+    // ローディング表示
+    previewContent.innerHTML = '<div class="loading">企画書を生成中...</div>';
+    document.getElementById('preview').style.display = 'block';
     let previewHTML = `
         <div class="proposal-content">
             <h3>${modelName}様撮影企画書</h3>
@@ -375,19 +379,22 @@ function generateProposal() {
                 <strong>撮影させていただきたいイメージ:</strong>
     `;
     
-    selectedTypes.forEach(typeCheckbox => {
+    // 動的に画像を取得して企画書に表示
+    for (const typeCheckbox of selectedTypes) {
         const shootingType = typeCheckbox.value;
+        const images = await getImagesFromFolder(shootingType);
+        
         previewHTML += `
             <div class="preview-type-section">
                 <h5>${shootingTypeNames[shootingType]}</h5>
                 <div class="preview-images">
-                    ${sampleImages[shootingType].map((src, index) => 
+                    ${images.map((src, index) => 
                         `<img src="${src}" alt="${shootingTypeNames[shootingType]} 作例 ${index + 1}" class="preview-image" onerror="this.style.display='none'">`
                     ).join('')}
                 </div>
             </div>
         `;
-    });
+    }
     
     previewHTML += `
             </div>
