@@ -126,14 +126,17 @@ async function getImagesFromFolder(shootingType) {
     
     // 1から maxCount まで順番に画像の存在をチェック
     for (let i = 1; i <= maxCount; i++) {
-        const imagePath = `images/${folder}/${prefix}${i}.jpg`;
+        // キャッシュ無効化のためタイムスタンプを追加
+        const imagePath = `images/${folder}/${prefix}${i}.jpg?t=${Date.now()}`;
         
         try {
             // 画像が存在するかチェック
             const exists = await checkImageExists(imagePath);
             if (exists) {
-                images.push(imagePath);
-                console.log(`画像発見: ${imagePath}`);
+                // 表示用にはクリーンなパス（タイムスタンプなし）を保存
+                const cleanPath = `images/${folder}/${prefix}${i}.jpg`;
+                images.push(cleanPath);
+                console.log(`画像発見: ${cleanPath}`);
             } else {
                 // 連続して存在しない場合は終了
                 if (i > 1 && images.length === i - 1) {
