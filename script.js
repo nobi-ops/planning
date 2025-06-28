@@ -114,8 +114,30 @@ const shootingTypeFolders = {
     hotel3: { folder: 'bath', prefix: 'bath', maxCount: 20 }
 };
 
+// 現在のbathフォルダの状態を反映（一時的な静的配列）
+const currentBathImages = [
+    'images/bath/bath1.jpg',
+    'images/bath/bath2.jpg',
+    'images/bath/bath3.jpg',
+    'images/bath/bath4.jpg',
+    'images/bath/bath5.jpg',
+    'images/bath/bath6.jpg',
+    'images/bath/bath7.jpg',
+    'images/bath/bath8.jpg',
+    'images/bath/bath9.jpg',
+    'images/bath/bath10.jpg',
+    'images/bath/bath11.jpg'
+];
+
 // フォルダ内の画像を動的に検索する関数
 async function getImagesFromFolder(shootingType) {
+    // hotel3の場合は現在のbathフォルダの状態を返す
+    if (shootingType === 'hotel3') {
+        console.log('hotel3: bathフォルダの現在の状態を返します');
+        console.log('bathフォルダの画像:', currentBathImages);
+        return currentBathImages;
+    }
+    
     const config = shootingTypeFolders[shootingType];
     if (!config) return [];
     
