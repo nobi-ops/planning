@@ -301,6 +301,9 @@ function generateProposal() {
         purposes: purposeText,
         fee: fee ? parseInt(fee) : 0
     };
+    
+    // ローカルストレージに自動保存
+    saveProposalToStorage(window.currentProposal, purposeList);
 }
 
 // 共有URL生成機能
@@ -341,6 +344,53 @@ function copyUrl() {
         console.error('コピーに失敗しました:', err);
         alert('URLのコピーに失敗しました。手動でコピーしてください。');
     }
+}
+
+// ローカルストレージに企画書を保存
+function saveProposalToStorage(proposalData, purposeList) {
+    const STORAGE_KEY = 'photo_proposals';
+    
+    // 既存のデータを取得
+    const existingData = localStorage.getItem(STORAGE_KEY);
+    const proposals = existingData ? JSON.parse(existingData) : [];
+    
+    // 利用目的の生データを保存（編集時に復元するため）
+    const selectedPurposes = document.querySelectorAll('input[name="purpose"]:checked');
+    const customPurpose = document.getElementById('customPurpose').value;
+    let rawPurposes = [];
+    
+    selectedPurposes.forEach(purpose => {
+        if (purpose.value === 'custom' && customPurpose.trim()) {
+            rawPurposes.push({ type: 'custom', value: customPurpose.trim() });
+        } else if (purpose.value !== 'custom') {
+            rawPurposes.push({ type: purpose.value, value: purposeList.find(p => p.includes(purpose.value)) || purpose.value });
+        }
+    });
+    
+    // 新しい企画書データ
+    const newProposal = {
+        id: Date.now().toString(), // 簡易的なID生成
+        ...proposalData,
+        rawPurposes: rawPurposes,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+    };
+    
+    // 同じモデル名の既存企画書があるかチェック
+    const existingIndex = proposals.findIndex(p => p.modelName === proposalData.modelName);
+    
+    if (existingIndex !== -1) {
+        // 既存データを更新
+        proposals[existingIndex] = { ...proposals[existingIndex], ...newProposal, createdAt: proposals[existingIndex].createdAt };
+    } else {
+        // 新規追加
+        proposals.push(newProposal);
+    }
+    
+    // ローカルストレージに保存
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(proposals));
+    
+    console.log('企画書を保存しました:', newProposal.modelName);
 }
 
 // イベントリスナー設定
