@@ -216,7 +216,9 @@ function handleShootingTypeChange() {
     if (checkboxes.length > 0) {
         checkboxes.forEach(checkbox => {
             const shootingType = checkbox.value;
+            console.log('選択された撮影タイプ:', shootingType);
             if (sampleImages[shootingType]) {
+                console.log('画像配列:', sampleImages[shootingType]);
                 // 撮影タイプごとのセクションを作成
                 const typeSection = document.createElement('div');
                 typeSection.className = 'type-section';
@@ -238,10 +240,15 @@ function handleShootingTypeChange() {
                 typeGrid.className = 'type-image-grid';
                 
                 sampleImages[shootingType].forEach((imageSrc, index) => {
+                    console.log('画像パスを設定:', imageSrc);
                     const img = document.createElement('img');
                     img.src = imageSrc;
                     img.alt = `${shootingTypeNames[shootingType]} 作例 ${index + 1}`;
                     img.className = 'sample-image';
+                    // 画像読み込み成功ハンドリング
+                    img.onload = function() {
+                        console.log('画像読み込み成功:', imageSrc);
+                    };
                     // 画像読み込みエラーハンドリング
                     img.onerror = function() {
                         console.error('画像読み込みエラー:', imageSrc);
