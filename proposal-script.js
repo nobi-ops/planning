@@ -13,16 +13,14 @@ const sampleImages = {
         'images/studio/studio10.jpg'
     ],
     outdoor: [
-        'images/outdoor/outdoor1.jpg',
-        'images/outdoor/outdoor2.jpg',
-        'images/outdoor/outdoor3.jpg',
-        'images/outdoor/outdoor4.jpg',
-        'images/outdoor/outdoor5.jpg',
-        'images/outdoor/outdoor6.jpg',
-        'images/outdoor/outdoor7.jpg',
-        'images/outdoor/outdoor8.jpg',
-        'images/outdoor/outdoor9.jpg',
-        'images/outdoor/outdoor10.jpg'
+        'images/outdoor/outdoor1.jpg?cache=1751150663',
+        'images/outdoor/outdoor2.jpg?cache=1751150663',
+        'images/outdoor/outdoor3.jpg?cache=1751150663',
+        'images/outdoor/outdoor4.jpg?cache=1751150663',
+        'images/outdoor/outdoor5.jpg?cache=1751150663',
+        'images/outdoor/outdoor6.jpg?cache=1751150663',
+        'images/outdoor/outdoor7.jpg?cache=1751150663',
+        'images/outdoor/outdoor8.jpg?cache=1751150663'
     ],
     sea: [
         'images/sea/sea1.jpg',

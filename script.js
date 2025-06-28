@@ -103,16 +103,6 @@ function updateDayOfWeek() {
     }
 }
 
-// 撮影タイプとフォルダのマッピング
-const shootingTypeFolders = {
-    studio: { folder: 'studio', prefix: 'studio', maxCount: 20 },
-    outdoor: { folder: 'outdoor', prefix: 'outdoor', maxCount: 20 },
-    sea: { folder: 'sea', prefix: 'sea', maxCount: 8 },
-    house: { folder: 'house', prefix: 'house', maxCount: 20 },
-    hotel: { folder: 'hotel', prefix: 'hotel', maxCount: 30 },
-    hotel2: { folder: 'bed', prefix: 'bed', maxCount: 20 },
-    hotel3: { folder: 'bath', prefix: 'bath', maxCount: 20 }
-};
 
 // 現在のbathフォルダの状態を反映
 const currentBathImages = [
@@ -132,7 +122,16 @@ const currentBathImages = [
 // 静的画像配列
 const staticImages = {
     studio: [],
-    outdoor: [],
+    outdoor: [
+        'images/outdoor/outdoor1.jpg?cache=1751150663',
+        'images/outdoor/outdoor2.jpg?cache=1751150663',
+        'images/outdoor/outdoor3.jpg?cache=1751150663',
+        'images/outdoor/outdoor4.jpg?cache=1751150663',
+        'images/outdoor/outdoor5.jpg?cache=1751150663',
+        'images/outdoor/outdoor6.jpg?cache=1751150663',
+        'images/outdoor/outdoor7.jpg?cache=1751150663',
+        'images/outdoor/outdoor8.jpg?cache=1751150663'
+    ],
     sea: [
         'images/sea/sea1.jpg',
         'images/sea/sea2.jpg',
@@ -177,67 +176,17 @@ const staticImages = {
     hotel3: currentBathImages
 };
 
-// 画像を取得する関数（静的配列ベース）
+// 画像を取得する関数（完全静的配列ベース）
 async function getImagesFromFolder(shootingType) {
     console.log(`${shootingType}の画像を取得中`);
     
-    // 静的配列に定義されている場合はそれを使用
-    if (staticImages[shootingType] && staticImages[shootingType].length > 0) {
-        console.log(`${shootingType}で${staticImages[shootingType].length}個の画像が見つかりました（静的配列）`);
-        return staticImages[shootingType];
-    }
-    
-    // 静的配列がない場合は動的検索
-    const config = shootingTypeFolders[shootingType];
-    if (!config) return [];
-    
-    const images = [];
-    const { folder, prefix, maxCount } = config;
-    
-    console.log(`${shootingType}の画像を動的検索中: ${folder}フォルダ`);
-    
-    // 1から maxCount まで順番に画像の存在をチェック
-    for (let i = 1; i <= maxCount; i++) {
-        const imagePath = `images/${folder}/${prefix}${i}.jpg`;
-        
-        try {
-            // 画像が存在するかチェック
-            const exists = await checkImageExists(imagePath);
-            if (exists) {
-                images.push(imagePath);
-                console.log(`画像発見: ${imagePath}`);
-            } else {
-                // 連続して存在しない場合は終了
-                if (i > 1 && images.length === i - 1) {
-                    // まだ連続している場合は続行
-                } else if (images.length === 0 && i > 3) {
-                    // 最初の3つが見つからない場合は終了
-                    break;
-                } else if (images.length > 0 && i - images.length > 3) {
-                    // 3つ以上連続で見つからない場合は終了
-                    break;
-                }
-            }
-        } catch (error) {
-            console.log(`画像チェックエラー: ${imagePath}`);
-        }
-    }
-    
-    console.log(`${shootingType}で見つかった画像数: ${images.length}`);
+    const images = staticImages[shootingType] || [];
+    console.log(`${shootingType}で${images.length}個の画像を返します`);
     return images;
 }
 
-// 画像の存在をチェックする関数
-function checkImageExists(imagePath) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = imagePath;
-    });
-}
 
-// 撮影タイプ選択時の処理（動的読み込み版）
+// 撮影タイプ選択時の処理（静的配列版）
 async function handleShootingTypeChange() {
     const checkboxes = document.querySelectorAll('input[name="shootingType"]:checked');
     const sampleImagesContainer = document.getElementById('sampleImages');
@@ -315,7 +264,7 @@ async function handleShootingTypeChange() {
     }
 }
 
-// 企画書生成処理（動的読み込み対応版）
+// 企画書生成処理（静的配列版）
 async function generateProposal() {
     console.log('企画書生成開始');
     
@@ -451,7 +400,7 @@ async function generateProposal() {
                 <strong>撮影させていただきたいイメージ:</strong>
     `;
     
-    // 動的に画像を取得して企画書に表示
+    // 静的配列から画像を取得して企画書に表示
     for (const typeCheckbox of selectedTypes) {
         const shootingType = typeCheckbox.value;
         const images = await getImagesFromFolder(shootingType);
