@@ -179,16 +179,13 @@ const sampleImages = {
         'images/hotel23.jpg'
     ],
     hotel2: [
-        'images/house/house1.jpg',
-        'images/house/house2.jpg',
-        'images/house/house3.jpg',
-        'images/house/house4.jpg',
-        'images/house/house5.jpg',
-        'images/house/house6.jpg',
-        'images/house/house7.jpg',
-        'images/house/house8.jpg',
-        'images/house/house9.jpg',
-        'images/house/house10.jpg'
+        'images/bed/bed1.jpg',
+        'images/bed/bed2.jpg',
+        'images/bed/bed3.jpg',
+        'images/bed/bed4.jpg',
+        'images/bed/bed5.jpg',
+        'images/bed/bed6.jpg',
+        'images/bed/bed7.jpg'
     ],
     hotel3: [
         'images/bath/bath1.jpg',
@@ -217,6 +214,11 @@ function handleShootingTypeChange() {
         checkboxes.forEach(checkbox => {
             const shootingType = checkbox.value;
             console.log('=== 選択された撮影タイプ:', shootingType, '===');
+            
+            if (shootingType === 'hotel2') {
+                console.log('ホテルでの撮影２が選択されました！');
+                console.log('bedフォルダの画像配列:', sampleImages[shootingType]);
+            }
             
             if (shootingType === 'hotel3') {
                 console.log('ホテルでの撮影３が選択されました！');
