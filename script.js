@@ -103,103 +103,70 @@ function updateDayOfWeek() {
     }
 }
 
-// 撮影タイプごとの作例画像データ（実際のフォルダ構造に合わせて修正）
-const sampleImages = {
-    studio: [
-        'images/studio/studio1.jpg',
-        'images/studio/studio2.jpg',
-        'images/studio/studio3.jpg',
-        'images/studio/studio4.jpg',
-        'images/studio/studio5.jpg',
-        'images/studio/studio6.jpg',
-        'images/studio/studio7.jpg',
-        'images/studio/studio8.jpg',
-        'images/studio/studio9.jpg',
-        'images/studio/studio10.jpg'
-    ],
-    outdoor: [
-        'images/outdoor/outdoor1.jpg',
-        'images/outdoor/outdoor2.jpg',
-        'images/outdoor/outdoor3.jpg',
-        'images/outdoor/outdoor4.jpg',
-        'images/outdoor/outdoor5.jpg',
-        'images/outdoor/outdoor6.jpg',
-        'images/outdoor/outdoor7.jpg',
-        'images/outdoor/outdoor8.jpg',
-        'images/outdoor/outdoor9.jpg',
-        'images/outdoor/outdoor10.jpg'
-    ],
-    sea: [
-        'images/sea/sea1.jpg',
-        'images/sea/sea2.jpg',
-        'images/sea/sea3.jpg',
-        'images/sea/sea4.jpg',
-        'images/sea/sea5.jpg',
-        'images/sea/sea6.jpg',
-        'images/sea/sea7.jpg',
-        'images/sea/sea8.jpg',
-        'images/sea/sea9.jpg',
-        'images/sea/sea10.jpg'
-    ],
-    house: [
-        'images/house/house1.jpg',
-        'images/house/house2.jpg',
-        'images/house/house3.jpg',
-        'images/house/house4.jpg',
-        'images/house/house5.jpg',
-        'images/house/house6.jpg',
-        'images/house/house7.jpg',
-        'images/house/house8.jpg',
-        'images/house/house9.jpg',
-        'images/house/house10.jpg'
-    ],
-    hotel: [
-        'images/hotel/hotel1.jpg',
-        'images/hotel/hotel2.jpg',
-        'images/hotel/hotel3.jpg',
-        'images/hotel/hotel4.jpg',
-        'images/hotel/hotel5.jpg',
-        'images/hotel/hotel6.jpg',
-        'images/hotel/hotel7.jpg',
-        'images/hotel/hotel8.jpg',
-        'images/hotel/hotel9.jpg',
-        'images/hotel/hotel10.jpg',
-        'images/hotel/hotel11.jpg',
-        'images/hotel/hotel12.jpg',
-        'images/hotel/hotel13.jpg',
-        'images/hotel/hotel14.jpg',
-        'images/hotel/hotel15.jpg',
-        'images/hotel/hotel16.jpg',
-        'images/hotel/hotel17.jpg',
-        'images/hotel/hotel18.jpg',
-        'images/hotel/hotel19.jpg'
-    ],
-    hotel2: [
-        'images/bed/bed1.jpg',
-        'images/bed/bed2.jpg',
-        'images/bed/bed3.jpg',
-        'images/bed/bed4.jpg',
-        'images/bed/bed5.jpg',
-        'images/bed/bed6.jpg',
-        'images/bed/bed7.jpg'
-    ],
-    hotel3: [
-        'images/bath/bath1.jpg',
-        'images/bath/bath2.jpg',
-        'images/bath/bath3.jpg',
-        'images/bath/bath4.jpg',
-        'images/bath/bath5.jpg',
-        'images/bath/bath6.jpg',
-        'images/bath/bath7.jpg',
-        'images/bath/bath8.jpg',
-        'images/bath/bath9.jpg',
-        'images/bath/bath10.jpg',
-        'images/bath/bath11.jpg'
-    ]
+// 撮影タイプとフォルダのマッピング
+const shootingTypeFolders = {
+    studio: { folder: 'studio', prefix: 'studio', maxCount: 20 },
+    outdoor: { folder: 'outdoor', prefix: 'outdoor', maxCount: 20 },
+    sea: { folder: 'sea', prefix: 'sea', maxCount: 20 },
+    house: { folder: 'house', prefix: 'house', maxCount: 20 },
+    hotel: { folder: 'hotel', prefix: 'hotel', maxCount: 30 },
+    hotel2: { folder: 'bed', prefix: 'bed', maxCount: 20 },
+    hotel3: { folder: 'bath', prefix: 'bath', maxCount: 20 }
 };
 
-// 撮影タイプ選択時の処理
-function handleShootingTypeChange() {
+// フォルダ内の画像を動的に検索する関数
+async function getImagesFromFolder(shootingType) {
+    const config = shootingTypeFolders[shootingType];
+    if (!config) return [];
+    
+    const images = [];
+    const { folder, prefix, maxCount } = config;
+    
+    console.log(`${shootingType}の画像を検索中: ${folder}フォルダ`);
+    
+    // 1から maxCount まで順番に画像の存在をチェック
+    for (let i = 1; i <= maxCount; i++) {
+        const imagePath = `images/${folder}/${prefix}${i}.jpg`;
+        
+        try {
+            // 画像が存在するかチェック
+            const exists = await checkImageExists(imagePath);
+            if (exists) {
+                images.push(imagePath);
+                console.log(`画像発見: ${imagePath}`);
+            } else {
+                // 連続して存在しない場合は終了
+                if (i > 1 && images.length === i - 1) {
+                    // まだ連続している場合は続行
+                } else if (images.length === 0 && i > 3) {
+                    // 最初の3つが見つからない場合は終了
+                    break;
+                } else if (images.length > 0 && i - images.length > 3) {
+                    // 3つ以上連続で見つからない場合は終了
+                    break;
+                }
+            }
+        } catch (error) {
+            console.log(`画像チェックエラー: ${imagePath}`);
+        }
+    }
+    
+    console.log(`${shootingType}で見つかった画像数: ${images.length}`);
+    return images;
+}
+
+// 画像の存在をチェックする関数
+function checkImageExists(imagePath) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = imagePath;
+    });
+}
+
+// 撮影タイプ選択時の処理（動的読み込み版）
+async function handleShootingTypeChange() {
     const checkboxes = document.querySelectorAll('input[name="shootingType"]:checked');
     const sampleImagesContainer = document.getElementById('sampleImages');
     const imageGrid = document.getElementById('imageGrid');
@@ -207,27 +174,24 @@ function handleShootingTypeChange() {
     imageGrid.innerHTML = '';
     
     if (checkboxes.length > 0) {
-        checkboxes.forEach(checkbox => {
+        // ローディング表示
+        imageGrid.innerHTML = '<div class="loading">画像を読み込み中...</div>';
+        
+        for (const checkbox of checkboxes) {
             const shootingType = checkbox.value;
             console.log('=== 選択された撮影タイプ:', shootingType, '===');
             
-            if (shootingType === 'hotel') {
-                console.log('ホテルでの撮影１が選択されました！');
-                console.log('hotelフォルダの画像配列:', sampleImages[shootingType]);
-            }
+            // 動的に画像を取得
+            const images = await getImagesFromFolder(shootingType);
             
-            if (shootingType === 'hotel2') {
-                console.log('ホテルでの撮影２が選択されました！');
-                console.log('bedフォルダの画像配列:', sampleImages[shootingType]);
-            }
-            
-            if (shootingType === 'hotel3') {
-                console.log('ホテルでの撮影３が選択されました！');
-                console.log('bathフォルダの画像配列:', sampleImages[shootingType]);
-            }
-            
-            if (sampleImages[shootingType]) {
-                console.log('画像配列が見つかりました:', sampleImages[shootingType]);
+            if (images.length > 0) {
+                // ローディング表示をクリア（最初の一回のみ）
+                if (imageGrid.innerHTML.includes('loading')) {
+                    imageGrid.innerHTML = '';
+                }
+                
+                console.log(`${shootingType}で${images.length}個の画像が見つかりました`);
+                
                 // 撮影タイプごとのセクションを作成
                 const typeSection = document.createElement('div');
                 typeSection.className = 'type-section';
@@ -248,7 +212,7 @@ function handleShootingTypeChange() {
                 const typeGrid = document.createElement('div');
                 typeGrid.className = 'type-image-grid';
                 
-                sampleImages[shootingType].forEach((imageSrc, index) => {
+                images.forEach((imageSrc, index) => {
                     console.log('画像パスを設定:', imageSrc);
                     const img = document.createElement('img');
                     img.src = imageSrc;
@@ -268,8 +232,10 @@ function handleShootingTypeChange() {
                 
                 typeSection.appendChild(typeGrid);
                 imageGrid.appendChild(typeSection);
+            } else {
+                console.log(`${shootingType}で画像が見つかりませんでした`);
             }
-        });
+        }
         
         sampleImagesContainer.style.display = 'block';
     } else {
