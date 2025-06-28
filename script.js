@@ -154,29 +154,25 @@ const sampleImages = {
         'images/house/house10.jpg'
     ],
     hotel: [
-        'images/hotel1.jpg',
-        'images/hotel2.jpg',
-        'images/hotel3.jpg',
-        'images/hotel4.jpg',
-        'images/hotel5.jpg',
-        'images/hotel6.jpg',
-        'images/hotel7.jpg',
-        'images/hotel8.jpg',
-        'images/hotel9.jpg',
-        'images/hotel10.jpg',
-        'images/hotel11.jpg',
-        'images/hotel12.jpg',
-        'images/hotel13.jpg',
-        'images/hotel14.jpg',
-        'images/hotel15.jpg',
-        'images/hotel16.jpg',
-        'images/hotel17.jpg',
-        'images/hotel18.jpg',
-        'images/hotel19.jpg',
-        'images/hotel20.jpg',
-        'images/hotel21.jpg',
-        'images/hotel22.jpg',
-        'images/hotel23.jpg'
+        'images/hotel/hotel1.jpg',
+        'images/hotel/hotel2.jpg',
+        'images/hotel/hotel3.jpg',
+        'images/hotel/hotel4.jpg',
+        'images/hotel/hotel5.jpg',
+        'images/hotel/hotel6.jpg',
+        'images/hotel/hotel7.jpg',
+        'images/hotel/hotel8.jpg',
+        'images/hotel/hotel9.jpg',
+        'images/hotel/hotel10.jpg',
+        'images/hotel/hotel11.jpg',
+        'images/hotel/hotel12.jpg',
+        'images/hotel/hotel13.jpg',
+        'images/hotel/hotel14.jpg',
+        'images/hotel/hotel15.jpg',
+        'images/hotel/hotel16.jpg',
+        'images/hotel/hotel17.jpg',
+        'images/hotel/hotel18.jpg',
+        'images/hotel/hotel19.jpg'
     ],
     hotel2: [
         'images/bed/bed1.jpg',
@@ -214,6 +210,11 @@ function handleShootingTypeChange() {
         checkboxes.forEach(checkbox => {
             const shootingType = checkbox.value;
             console.log('=== 選択された撮影タイプ:', shootingType, '===');
+            
+            if (shootingType === 'hotel') {
+                console.log('ホテルでの撮影１が選択されました！');
+                console.log('hotelフォルダの画像配列:', sampleImages[shootingType]);
+            }
             
             if (shootingType === 'hotel2') {
                 console.log('ホテルでの撮影２が選択されました！');
