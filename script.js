@@ -216,9 +216,15 @@ function handleShootingTypeChange() {
     if (checkboxes.length > 0) {
         checkboxes.forEach(checkbox => {
             const shootingType = checkbox.value;
-            console.log('選択された撮影タイプ:', shootingType);
+            console.log('=== 選択された撮影タイプ:', shootingType, '===');
+            
+            if (shootingType === 'hotel3') {
+                console.log('ホテルでの撮影３が選択されました！');
+                console.log('bathフォルダの画像配列:', sampleImages[shootingType]);
+            }
+            
             if (sampleImages[shootingType]) {
-                console.log('画像配列:', sampleImages[shootingType]);
+                console.log('画像配列が見つかりました:', sampleImages[shootingType]);
                 // 撮影タイプごとのセクションを作成
                 const typeSection = document.createElement('div');
                 typeSection.className = 'type-section';
