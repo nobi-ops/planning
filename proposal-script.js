@@ -81,7 +81,7 @@ function loadProposalFromUrl() {
     }
     
     const shootingTypes = typesStr.split(',');
-    const purposes = purposesStr.split('|').filter(p => p.trim());
+    const purposes = decodeURIComponent(purposesStr);
     
     // 曜日を計算
     const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
@@ -101,7 +101,7 @@ function loadProposalFromUrl() {
     document.getElementById('proposalTitle').textContent = `${modelName}様撮影企画書`;
     document.getElementById('shootingDate').textContent = fullDate;
     document.getElementById('location').textContent = location;
-    document.getElementById('purposes').textContent = purposes.join(', ');
+    document.getElementById('purposes').textContent = purposes;
     
     // 謝礼の表示
     if (fee && parseInt(fee) > 0) {

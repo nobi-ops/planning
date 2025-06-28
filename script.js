@@ -222,7 +222,8 @@ function generateProposal() {
     
     // 利用目的の処理
     const purposeNames = {
-        web: 'WEBサイトやSNS、メールマガジン等での利用',
+        website: 'WEBサイト',
+        sns: 'SNS',
         amazon: 'amazon写真集'
     };
     
@@ -234,6 +235,8 @@ function generateProposal() {
             purposeList.push(purposeNames[purpose.value]);
         }
     });
+    
+    const purposeText = purposeList.length > 0 ? purposeList.join('、') + '等で利用させていただきます。' : '';
     
     // プレビュー表示
     const previewContent = document.getElementById('previewContent');
@@ -247,7 +250,7 @@ function generateProposal() {
                 <strong>撮影場所:</strong> ${location}
             </div>
             <div class="proposal-item">
-                <strong>作品の利用目的:</strong> ${purposeList.join(', ')}
+                <strong>作品の利用目的:</strong> ${purposeText}
             </div>`;
     
     if (fee && fee > 0) {
@@ -292,7 +295,7 @@ function generateProposal() {
         day: parseInt(day),
         location,
         shootingTypes: selectedTypeValues,
-        purposes: purposeList,
+        purposes: purposeText,
         fee: fee ? parseInt(fee) : 0
     };
 }
@@ -312,7 +315,7 @@ function generateShareUrl() {
         day: data.day,
         location: data.location,
         types: data.shootingTypes.join(','),
-        purposes: data.purposes.join('|'),
+        purposes: encodeURIComponent(data.purposes),
         fee: data.fee
     });
     
