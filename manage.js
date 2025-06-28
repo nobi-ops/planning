@@ -7,7 +7,9 @@ const shootingTypeNames = {
     outdoor: '屋外撮影',
     sea: '海での撮影',
     house: 'ハウススタジオ撮影',
-    hotel: 'ホテルでの撮影'
+    hotel: 'ホテルでの撮影１',
+    hotel2: 'ホテルでの撮影２',
+    hotel3: 'ホテルでの撮影３'
 };
 
 // 利用目的名マッピング

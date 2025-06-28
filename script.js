@@ -164,6 +164,30 @@ const sampleImages = {
         'images/hotel/hotel8.jpg',
         'images/hotel/hotel9.jpg',
         'images/hotel/hotel10.jpg'
+    ],
+    hotel2: [
+        'images/bed/bed1.jpg',
+        'images/bed/bed2.jpg',
+        'images/bed/bed3.jpg',
+        'images/bed/bed4.jpg',
+        'images/bed/bed5.jpg',
+        'images/bed/bed6.jpg',
+        'images/bed/bed7.jpg',
+        'images/bed/bed8.jpg',
+        'images/bed/bed9.jpg',
+        'images/bed/bed10.jpg'
+    ],
+    hotel3: [
+        'images/bath/bath1.jpg',
+        'images/bath/bath2.jpg',
+        'images/bath/bath3.jpg',
+        'images/bath/bath4.jpg',
+        'images/bath/bath5.jpg',
+        'images/bath/bath6.jpg',
+        'images/bath/bath7.jpg',
+        'images/bath/bath8.jpg',
+        'images/bath/bath9.jpg',
+        'images/bath/bath10.jpg'
     ]
 };
 
@@ -189,7 +213,9 @@ function handleShootingTypeChange() {
                     outdoor: '屋外撮影',
                     sea: '海での撮影',
                     house: 'ハウススタジオ撮影',
-                    hotel: 'ホテルでの撮影'
+                    hotel: 'ホテルでの撮影１',
+                    hotel2: 'ホテルでの撮影２',
+                    hotel3: 'ホテルでの撮影３'
                 };
                 typeTitle.textContent = shootingTypeNames[shootingType];
                 typeSection.appendChild(typeTitle);
@@ -297,7 +323,9 @@ function generateProposal() {
         outdoor: '屋外撮影',
         sea: '海での撮影',
         house: 'ハウススタジオ撮影',
-        hotel: 'ホテルでの撮影'
+        hotel: 'ホテルでの撮影１',
+        hotel2: 'ホテルでの撮影２',
+        hotel3: 'ホテルでの撮影３'
     };
     
     const selectedTypeValues = Array.from(selectedTypes).map(type => type.value);
