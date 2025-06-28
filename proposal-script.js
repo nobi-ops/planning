@@ -99,7 +99,6 @@ function loadProposalFromUrl() {
     
     // データを表示
     document.getElementById('proposalTitle').textContent = `${modelName}様撮影企画書`;
-    document.getElementById('modelName').textContent = modelName;
     document.getElementById('shootingDate').textContent = fullDate;
     document.getElementById('location').textContent = location;
     document.getElementById('purposes').textContent = purposes.join(', ');

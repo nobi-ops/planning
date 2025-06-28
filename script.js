@@ -241,9 +241,6 @@ function generateProposal() {
         <div class="proposal-content">
             <h3>${modelName}様撮影企画書</h3>
             <div class="proposal-item">
-                <strong>モデル名:</strong> ${modelName}
-            </div>
-            <div class="proposal-item">
                 <strong>撮影日時:</strong> ${fullDate}
             </div>
             <div class="proposal-item">
