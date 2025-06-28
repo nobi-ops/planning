@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>撮影企画書</title>
+    <link rel="stylesheet" href="proposal-style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="proposal-header">
+            <h1 id="proposalTitle">撮影企画書</h1>
+            <p class="subtitle">Photography Project Proposal</p>
+        </header>
+
+        <main class="proposal-main">
+            <div class="proposal-info">
+                <div class="info-item">
+                    <label>モデル名</label>
+                    <div id="modelName" class="info-value"></div>
+                </div>
+                
+                <div class="info-item">
+                    <label>撮影日時</label>
+                    <div id="shootingDate" class="info-value"></div>
+                </div>
+                
+                <div class="info-item">
+                    <label>撮影場所</label>
+                    <div id="location" class="info-value"></div>
+                </div>
+                
+                <div class="info-item">
+                    <label>撮影タイプ</label>
+                    <div id="shootingTypes" class="info-value"></div>
+                </div>
+            </div>
+
+            <div class="proposal-examples">
+                <h2>参考作例</h2>
+                <div id="exampleImages" class="examples-container"></div>
+            </div>
+        </main>
+
+        <footer class="proposal-footer">
+            <p>本企画書は撮影イメージの参考資料として作成されています。</p>
+            <p>詳細については撮影者までお気軽にお問い合わせください。</p>
+        </footer>
+    </div>
+
+    <script src="proposal-script.js"></script>
+</body>
+</html>
