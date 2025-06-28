@@ -107,14 +107,14 @@ function updateDayOfWeek() {
 const shootingTypeFolders = {
     studio: { folder: 'studio', prefix: 'studio', maxCount: 20 },
     outdoor: { folder: 'outdoor', prefix: 'outdoor', maxCount: 20 },
-    sea: { folder: 'sea', prefix: 'sea', maxCount: 20 },
+    sea: { folder: 'sea', prefix: 'sea', maxCount: 8 },
     house: { folder: 'house', prefix: 'house', maxCount: 20 },
     hotel: { folder: 'hotel', prefix: 'hotel', maxCount: 30 },
     hotel2: { folder: 'bed', prefix: 'bed', maxCount: 20 },
     hotel3: { folder: 'bath', prefix: 'bath', maxCount: 20 }
 };
 
-// 現在のbathフォルダの状態を反映（一時的な静的配列）
+// 現在のbathフォルダの状態を反映
 const currentBathImages = [
     'images/bath/bath1.jpg',
     'images/bath/bath2.jpg',
@@ -129,36 +129,83 @@ const currentBathImages = [
     'images/bath/bath11.jpg'
 ];
 
-// フォルダ内の画像を動的に検索する関数
+// 静的画像配列
+const staticImages = {
+    studio: [],
+    outdoor: [],
+    sea: [
+        'images/sea/sea1.jpg',
+        'images/sea/sea2.jpg',
+        'images/sea/sea3.jpg',
+        'images/sea/sea4.jpg',
+        'images/sea/sea5.jpg',
+        'images/sea/sea6.jpg',
+        'images/sea/sea7.jpg',
+        'images/sea/sea8.jpg'
+    ],
+    house: [],
+    hotel: [
+        'images/hotel/hotel1.jpg',
+        'images/hotel/hotel2.jpg',
+        'images/hotel/hotel3.jpg',
+        'images/hotel/hotel4.jpg',
+        'images/hotel/hotel5.jpg',
+        'images/hotel/hotel6.jpg',
+        'images/hotel/hotel7.jpg',
+        'images/hotel/hotel8.jpg',
+        'images/hotel/hotel9.jpg',
+        'images/hotel/hotel10.jpg',
+        'images/hotel/hotel11.jpg',
+        'images/hotel/hotel12.jpg',
+        'images/hotel/hotel13.jpg',
+        'images/hotel/hotel14.jpg',
+        'images/hotel/hotel15.jpg',
+        'images/hotel/hotel16.jpg',
+        'images/hotel/hotel17.jpg',
+        'images/hotel/hotel18.jpg',
+        'images/hotel/hotel19.jpg'
+    ],
+    hotel2: [
+        'images/bed/bed1.jpg',
+        'images/bed/bed2.jpg',
+        'images/bed/bed3.jpg',
+        'images/bed/bed4.jpg',
+        'images/bed/bed5.jpg',
+        'images/bed/bed6.jpg',
+        'images/bed/bed7.jpg'
+    ],
+    hotel3: currentBathImages
+};
+
+// 画像を取得する関数（静的配列ベース）
 async function getImagesFromFolder(shootingType) {
-    // hotel3の場合は現在のbathフォルダの状態を返す
-    if (shootingType === 'hotel3') {
-        console.log('hotel3: bathフォルダの現在の状態を返します');
-        console.log('bathフォルダの画像:', currentBathImages);
-        return currentBathImages;
+    console.log(`${shootingType}の画像を取得中`);
+    
+    // 静的配列に定義されている場合はそれを使用
+    if (staticImages[shootingType] && staticImages[shootingType].length > 0) {
+        console.log(`${shootingType}で${staticImages[shootingType].length}個の画像が見つかりました（静的配列）`);
+        return staticImages[shootingType];
     }
     
+    // 静的配列がない場合は動的検索
     const config = shootingTypeFolders[shootingType];
     if (!config) return [];
     
     const images = [];
     const { folder, prefix, maxCount } = config;
     
-    console.log(`${shootingType}の画像を検索中: ${folder}フォルダ`);
+    console.log(`${shootingType}の画像を動的検索中: ${folder}フォルダ`);
     
     // 1から maxCount まで順番に画像の存在をチェック
     for (let i = 1; i <= maxCount; i++) {
-        // キャッシュ無効化のためタイムスタンプを追加
-        const imagePath = `images/${folder}/${prefix}${i}.jpg?t=${Date.now()}`;
+        const imagePath = `images/${folder}/${prefix}${i}.jpg`;
         
         try {
             // 画像が存在するかチェック
             const exists = await checkImageExists(imagePath);
             if (exists) {
-                // 表示用にはクリーンなパス（タイムスタンプなし）を保存
-                const cleanPath = `images/${folder}/${prefix}${i}.jpg`;
-                images.push(cleanPath);
-                console.log(`画像発見: ${cleanPath}`);
+                images.push(imagePath);
+                console.log(`画像発見: ${imagePath}`);
             } else {
                 // 連続して存在しない場合は終了
                 if (i > 1 && images.length === i - 1) {

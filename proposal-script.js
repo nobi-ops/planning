@@ -32,9 +32,7 @@ const sampleImages = {
         'images/sea/sea5.jpg',
         'images/sea/sea6.jpg',
         'images/sea/sea7.jpg',
-        'images/sea/sea8.jpg',
-        'images/sea/sea9.jpg',
-        'images/sea/sea10.jpg'
+        'images/sea/sea8.jpg'
     ],
     house: [
         'images/house/house1.jpg',
