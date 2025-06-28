@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企画書管理 - 撮影企画書生成ツール</title>
+    <link rel="stylesheet" href="manage-style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>企画書管理</h1>
+            <nav>
+                <a href="index.html" class="nav-link">新規作成</a>
+                <a href="manage.html" class="nav-link active">管理</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="summary-section">
+                <div class="summary-card">
+                    <h2>保存済み企画書</h2>
+                    <span id="totalCount" class="count">0</span>
+                    <p>件</p>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <button id="exportAll" class="action-btn">全件エクスポート</button>
+                <button id="deleteSelected" class="action-btn delete-btn" disabled>選択削除</button>
+            </div>
+
+            <div class="proposals-section">
+                <div class="section-header">
+                    <h2>企画書一覧</h2>
+                    <div class="filter-controls">
+                        <input type="text" id="searchInput" placeholder="モデル名で検索...">
+                        <select id="sortSelect">
+                            <option value="date-desc">作成日時（新しい順）</option>
+                            <option value="date-asc">作成日時（古い順）</option>
+                            <option value="name-asc">モデル名（あいうえお順）</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="proposalsList" class="proposals-list">
+                    <!-- 企画書一覧がここに動的に表示される -->
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📋</div>
+                    <h3>保存された企画書がありません</h3>
+                    <p>新しい企画書を作成して、自動保存機能をご利用ください。</p>
+                    <a href="index.html" class="create-btn">新規作成</a>
+                </div>
+            </div>
+        </main>
+
+        <!-- 編集モーダル -->
+        <div id="editModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>企画書編集</h2>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <div class="form-group">
+                            <label for="editModelName">モデル名:</label>
+                            <input type="text" id="editModelName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>撮影日時: <span class="optional-note">（後日調整可能）</span></label>
+                            <div class="date-selector">
+                                <select id="editYear">
+                                    <option value="">年</option>
+                                </select>
+                                <select id="editMonth">
+                                    <option value="">月</option>
+                                </select>
+                                <select id="editDay">
+                                    <option value="">日</option>
+                                </select>
+                                <span id="editDayOfWeek" class="day-of-week"></span>
+                            </div>
+                            <div class="time-selector">
+                                <div class="time-group">
+                                    <label for="editStartTime">開始時間:</label>
+                                    <select id="editStartTime" name="editStartTime">
+                                        <option value="">未定</option>
+                                    </select>
+                                </div>
+                                <div class="time-group">
+                                    <label for="editEndTime">終了時間:</label>
+                                    <select id="editEndTime" name="editEndTime">
+                                        <option value="">未定</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editLocation">撮影場所:</label>
+                            <input type="text" id="editLocation" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>作品の利用目的:</label>
+                            <div class="purpose-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editPurpose" value="website">
+                                    WEBサイト
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editPurpose" value="sns">
+                                    SNS
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editPurpose" value="amazon">
+                                    amazon写真集
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editPurpose" value="custom">
+                                    その他
+                                    <input type="text" id="editCustomPurpose" placeholder="具体的な利用目的を入力">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editFee">謝礼:</label>
+                            <div class="fee-input">
+                                <input type="number" id="editFee" min="0" placeholder="金額を入力">
+                                <span>円</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="shooting-type-checkboxes">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editShootingType" value="studio">
+                                    スタジオ撮影
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editShootingType" value="outdoor">
+                                    屋外撮影
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editShootingType" value="sea">
+                                    海での撮影
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editShootingType" value="house">
+                                    ハウススタジオ撮影
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="editShootingType" value="hotel">
+                                    ホテルでの撮影
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelEdit" class="cancel-btn">キャンセル</button>
+                    <button id="saveEdit" class="save-btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="manage.js"></script>
+</body>
+</html>

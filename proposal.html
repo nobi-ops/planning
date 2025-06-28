@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>撮影企画書</title>
+    <link rel="stylesheet" href="proposal-style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="proposal-header">
+            <h1 id="proposalTitle">撮影企画書</h1>
+            <p class="subtitle">Photography Project Proposal</p>
+        </header>
+
+        <main class="proposal-main">
+            <div class="proposal-info">
+                <div class="info-item">
+                    <label>撮影日時</label>
+                    <div id="shootingDate" class="info-value"></div>
+                </div>
+                
+                <div class="info-item">
+                    <label>撮影場所</label>
+                    <div id="location" class="info-value"></div>
+                </div>
+                
+                <div class="info-item">
+                    <label>作品のお渡し方法</label>
+                    <div class="info-value">作品一式はデジタルデータでお渡しします。ぜひSNS等でご利用ください。</div>
+                </div>
+                
+                <div class="info-item">
+                    <label>作品の利用目的</label>
+                    <div id="purposes" class="info-value"></div>
+                </div>
+                
+                <div class="info-item" id="feeSection" style="display: none;">
+                    <label>謝礼</label>
+                    <div id="feeAmount" class="info-value"></div>
+                </div>
+            </div>
+
+            <div class="proposal-examples">
+                <h2>撮影させていただきたいイメージ</h2>
+                <div id="exampleImages" class="examples-container"></div>
+            </div>
+        </main>
+
+        <footer class="proposal-footer">
+            <p>上記のほか、ご希望のイメージを撮影いたします。</p>
+            <p>お気軽に撮影イメージをお申し付けください！</p>
+        </footer>
+    </div>
+
+    <script src="proposal-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>撮影企画書生成ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>撮影企画書生成ツール</h1>
+            <nav>
+                <a href="index.html" class="nav-link active">新規作成</a>
+                <a href="manage.html" class="nav-link">管理</a>
+            </nav>
+        </header>
+
+        <form id="projectForm">
+            <div class="form-group">
+                <label for="modelName">モデル名:</label>
+                <input type="text" id="modelName" name="modelName" required>
+            </div>
+
+            <div class="form-group">
+                <label>撮影日時: <span class="optional-note">（後日調整可能）</span></label>
+                <div class="date-selector">
+                    <select id="shootingYear" name="shootingYear">
+                        <option value="">年</option>
+                    </select>
+                    <select id="shootingMonth" name="shootingMonth">
+                        <option value="">月</option>
+                    </select>
+                    <select id="shootingDay" name="shootingDay">
+                        <option value="">日</option>
+                    </select>
+                    <span id="dayOfWeek" class="day-of-week"></span>
+                </div>
+                <div class="time-selector">
+                    <div class="time-group">
+                        <label for="startTime">開始時間:</label>
+                        <select id="startTime" name="startTime">
+                            <option value="">未定</option>
+                        </select>
+                    </div>
+                    <div class="time-group">
+                        <label for="endTime">終了時間:</label>
+                        <select id="endTime" name="endTime">
+                            <option value="">未定</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">撮影場所:</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+
+            <div class="form-group">
+                <div class="shooting-type-checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="shootingType" value="studio">
+                        スタジオ撮影
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="shootingType" value="outdoor">
+                        屋外撮影
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="shootingType" value="sea">
+                        海での撮影
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="shootingType" value="house">
+                        ハウススタジオ撮影
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="shootingType" value="hotel">
+                        ホテルでの撮影
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>作品の利用目的:</label>
+                <div class="purpose-checkboxes">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="website">
+                        WEBサイト
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="sns">
+                        SNS
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="amazon">
+                        amazon写真集
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="purpose" value="custom">
+                        その他
+                        <input type="text" id="customPurpose" placeholder="具体的な利用目的を入力" style="margin-left: 10px; width: 300px;">
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fee">謝礼:</label>
+                <div class="fee-input">
+                    <input type="number" id="fee" name="fee" placeholder="金額を入力" min="0">
+                    <span>円</span>
+                </div>
+            </div>
+
+            <div id="sampleImages" class="sample-images-container" style="display: none;">
+                <h3>撮影させていただきたいイメージ</h3>
+                <div class="image-storage-note">
+                    <strong>📁 画像ファイル格納方法：</strong>
+                    <div class="storage-info">
+                        <div><code>images/studio/</code> → studio1.jpg ~ studio10.jpg</div>
+                        <div><code>images/outdoor/</code> → outdoor1.jpg ~ outdoor10.jpg</div>
+                        <div><code>images/sea/</code> → sea1.jpg ~ sea10.jpg</div>
+                        <div><code>images/house/</code> → house1.jpg ~ house10.jpg</div>
+                        <div><code>images/hotel/</code> → hotel1.jpg ~ hotel10.jpg</div>
+                    </div>
+                </div>
+                <div id="imageGrid" class="image-grid"></div>
+            </div>
+
+            <button type="button" id="generateProposal">企画書を作成</button>
+        </form>
+
+        <div id="preview" class="preview-container" style="display: none;">
+            <h2>撮影企画書プレビュー</h2>
+            <div id="previewContent"></div>
+            <div class="share-section">
+                <button type="button" id="generateShareUrl">共有URLを生成</button>
+                <div id="shareUrlContainer" style="display: none;">
+                    <label>モデルさんに送る共有URL:</label>
+                    <div class="url-container">
+                        <input type="text" id="shareUrl" readonly>
+                        <button type="button" id="copyUrl">コピー</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>
