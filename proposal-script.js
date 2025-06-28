@@ -95,7 +95,8 @@ const sampleImages = {
         'images/bath/bath7.jpg',
         'images/bath/bath8.jpg',
         'images/bath/bath9.jpg',
-        'images/bath/bath10.jpg'
+        'images/bath/bath10.jpg',
+        'images/bath/bath11.jpg'
     ]
 };
 
