@@ -58,7 +58,20 @@ const sampleImages = {
         'images/hotel/hotel7.jpg',
         'images/hotel/hotel8.jpg',
         'images/hotel/hotel9.jpg',
-        'images/hotel/hotel10.jpg'
+        'images/hotel/hotel10.jpg',
+        'images/hotel/hotel11.jpg',
+        'images/hotel/hotel12.jpg',
+        'images/hotel/hotel13.jpg',
+        'images/hotel/hotel14.jpg',
+        'images/hotel/hotel15.jpg',
+        'images/hotel/hotel16.jpg',
+        'images/hotel/hotel17.jpg',
+        'images/hotel/hotel18.jpg',
+        'images/hotel/hotel19.jpg',
+        'images/hotel/hotel20.jpg',
+        'images/hotel/hotel21.jpg',
+        'images/hotel/hotel22.jpg',
+        'images/hotel/hotel23.jpg'
     ],
     hotel2: [
         'images/bed/bed1.jpg',
