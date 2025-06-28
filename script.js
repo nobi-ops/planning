@@ -123,14 +123,14 @@ const currentBathImages = [
 const staticImages = {
     studio: [],
     outdoor: [
-        'images/outdoor/outdoor1.jpg?cache=1751150663',
-        'images/outdoor/outdoor2.jpg?cache=1751150663',
-        'images/outdoor/outdoor3.jpg?cache=1751150663',
-        'images/outdoor/outdoor4.jpg?cache=1751150663',
-        'images/outdoor/outdoor5.jpg?cache=1751150663',
-        'images/outdoor/outdoor6.jpg?cache=1751150663',
-        'images/outdoor/outdoor7.jpg?cache=1751150663',
-        'images/outdoor/outdoor8.jpg?cache=1751150663'
+        'images/outdoor/outdoor1.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor2.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor3.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor4.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor5.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor6.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor7.jpg?bust=226319424&t=' + Date.now(),
+        'images/outdoor/outdoor8.jpg?bust=226319424&t=' + Date.now()
     ],
     sea: [
         'images/sea/sea1.jpg',
