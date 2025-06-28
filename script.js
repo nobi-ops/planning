@@ -250,6 +250,9 @@ function generateProposal() {
                 <strong>撮影場所:</strong> ${location}
             </div>
             <div class="proposal-item">
+                <strong>作品のお渡し方法:</strong> 作品一式はデジタルデータでお渡しします。ぜひSNS等でご利用ください。
+            </div>
+            <div class="proposal-item">
                 <strong>作品の利用目的:</strong> ${purposeText}
             </div>`;
     
